@@ -11,6 +11,11 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     console.log('Alguien se ha conectado con socket')
+    socket.emit('messages',{
+        id: 1,
+        texto: "HELLO EVERYNYA HOW ARE YOU FINE THANK YOU",
+        autor: "Perla Judith Rodriguez Salinas"
+    });
 });
 
 server.listen(3100, function(){
