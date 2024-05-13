@@ -3,6 +3,12 @@ var app = express();
 var server = require('http').Server(app);
 var io = require ('socket.io')(server);
 
+var messages= [{
+    id: 1,
+    texto: "HELLO EVERYNYA HOW ARE YOU FINE THANK YOU",
+    autor: "Perla Judith Rodriguez Salinas"
+}]
+
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
@@ -11,10 +17,10 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     console.log('Alguien se ha conectado con socket')
-    socket.emit('messages',{
-        id: 1,
-        texto: "HELLO EVERYNYA HOW ARE YOU FINE THANK YOU",
-        autor: "Perla Judith Rodriguez Salinas"
+    socket.emit('messages', messages);
+    socket.on('new-message', function(data){
+        //para poder guardar mensajes lo ideal es usar una base d datos pero aqui vamos a usar arrays
+        messages.push(data);
     });
 });
 
