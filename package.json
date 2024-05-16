@@ -1,6 +1,6 @@
 {
   "name": "proyecto-sockets",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Proyecto con la utilizacion de sockets como socket.io",
   "main": "index.js",
   "scripts": {
