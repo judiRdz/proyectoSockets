@@ -1,13 +1,13 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
-var io = require ('socket.io')(server);
-
-var messages= [{
+var io = require('socket.io')(server);
+//array que guarda los mensajes
+var messages = [{
     id: 1,
-    texto: "HELLO EVERYNYA HOW ARE YOU FINE THANK YOU",
+    texto: "olap",
     autor: "Perla Judith Rodriguez Salinas"
-}]
+}];
 
 app.use(express.static('public'));
 
@@ -18,12 +18,14 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
     console.log('Alguien se ha conectado con socket')
     socket.emit('messages', messages);
+    //Ahora queremos escuchar los mensajes mandados por el cliente
     socket.on('new-message', function(data){
-        //para poder guardar mensajes lo ideal es usar una base d datos pero aqui vamos a usar arrays
-        messages.push(data);
+        messages.push(data); // Agregar el nuevo mensaje al array
+        //queremos que todos los mensajes se manden a todos los clientes
+        io.sockets.emit('messages', messages);
     });
 });
 
 server.listen(3100, function(){
-    console.log("El servidor esta corriendo en http://localhost:3100")
+    console.log("El Servidor esta corriendo en http://localhost:3100");
 });
